@@ -1,0 +1,27 @@
+spring:
+    config:
+        activate:
+            on-profile: default
+    data:
+        mongodb:
+            authentication-database: admin
+            username: events
+            password: events
+            database: event_db
+            port: 27017
+            host: localhost
+            auto-index-creation: true
+server:
+    port: 8088
+    error:
+        include-message: always
+        include-binding-errors: always
+        include-stacktrace: on_trace_param
+        include-exception: false
+
+
+---
+spring:
+    config:
+        activate:
+            on-profile: test
