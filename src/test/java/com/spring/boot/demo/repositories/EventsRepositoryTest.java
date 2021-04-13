@@ -2,10 +2,7 @@ package com.spring.boot.demo.repositories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.boot.demo.model.Event;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,11 +59,11 @@ class EventsRepositoryTest {
     @DisplayName("Repository - Create Event")
     public void createEvent(){
         //given
-        Event testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
+        var testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
 
 
         // when
-        Event savedEvent = eventsRepository.save(testEvent);
+        var savedEvent = eventsRepository.save(testEvent);
 
         //then
 
@@ -77,10 +74,10 @@ class EventsRepositoryTest {
 
     @Test
     @DisplayName("Repository - Find Event by Id")
-    public void testFindEventById(){
+    public void testFindEventsById(){
 
         //given
-        Event testEvent = new Event("id", "name", "description", "Amsterdam", "John doe", new Date());
+        var testEvent = new Event("id", "name", "description", "Amsterdam", "John doe", new Date());
         eventsRepository.save(testEvent);
 
         // when
@@ -88,8 +85,8 @@ class EventsRepositoryTest {
 
         //then
 
-        then(fetchEvent.get().getId())
-                .as("Validate the Id as saved")
-                .isEqualTo(testEvent.getId());
+        then("id")
+                .as("Validate the Id as saved same find.")
+                .isEqualTo(fetchEvent.get().getId());
     }
 }

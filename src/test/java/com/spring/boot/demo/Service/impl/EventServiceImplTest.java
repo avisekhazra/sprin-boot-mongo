@@ -79,11 +79,11 @@ class EventServiceImplTest {
     public void testPostEventSuccess(){
         //given
 
-        Event testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe",new Date());
+        var testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe",new Date());
         given(eventsRepository.save(any())).willReturn(testEvent);
 
         //when
-        Event savedEvent = eventService.postEvent(testEvent);
+        var savedEvent = eventService.postEvent(testEvent);
 
         //then
 
@@ -109,11 +109,11 @@ class EventServiceImplTest {
     @DisplayName("Find event by Id - Success")
     public void testFindEventByIdSuccess(){
         //given
-        Event testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
+        var testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
         given(eventsRepository.findById(any())).willReturn(Optional.of(testEvent));
 
         //when
-        Optional<Event> findEvent = eventService.findEventById("id");
+        var findEvent = eventService.findEventById("id");
 
         //then
 
@@ -131,11 +131,11 @@ class EventServiceImplTest {
     @DisplayName("Test - getEventsByVenue success")
     public void testGetEventsByVenue(){
         //given
-        Event testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
+        var testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
         mongoTemplate.save(testEvent);
 
         //when
-        List<Event> findEvents = eventService.getEventsByVenue("Amsterdam");
+        var findEvents = eventService.getEventsByVenue("Amsterdam");
 
         //then
         SoftAssertions.assertSoftly(softly -> {

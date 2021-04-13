@@ -42,9 +42,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public Optional<Event> updateEventById(String id , Event event) {
 
-        Query query = new Query();
+        var query = new Query();
         query.addCriteria(Criteria.where("id").is(new ObjectId(id)));
-        Update update = new Update();
+        var update = new Update();
         update.set("name",event.getName());
         update.set("description",event.getDescription());
         mongoTemplate.updateFirst(query, update, Event.class);
@@ -54,7 +54,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getEventsByVenue(String venue) {
-        Query query = new Query();
+        var query = new Query();
         query.addCriteria(Criteria.where("venue").is(venue));
         return mongoTemplate.find(query,Event.class);
 

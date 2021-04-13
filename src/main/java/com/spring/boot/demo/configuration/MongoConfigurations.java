@@ -58,8 +58,8 @@ public class MongoConfigurations extends AbstractMongoClientConfiguration {
 
     @Override
     public MappingMongoConverter mappingMongoConverter(MongoDatabaseFactory databaseFactory, MongoCustomConversions customConversions, MongoMappingContext mappingContext) {
-        DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory());
-        MappingMongoConverter converter = new MappingMongoConverter(
+        var dbRefResolver = new DefaultDbRefResolver(mongoDbFactory());
+        var converter = new MappingMongoConverter(
                 dbRefResolver, mappingContext);
         //Set this to remove the _class from the persistent layers
         converter.setTypeMapper(new DefaultMongoTypeMapper(null));

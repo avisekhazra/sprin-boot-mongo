@@ -3,7 +3,6 @@ package com.spring.boot.demo.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.boot.demo.Service.EventService;
 import com.spring.boot.demo.model.Event;
-import jdk.jfr.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +37,7 @@ class EventControllerTest {
     public void getEventByIdSuccess() throws Exception {
         //given
 
-        Event testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
+        var testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
         given(eventService.findEventById(any())).willReturn(Optional.of(testEvent));
         //when
 
@@ -55,7 +54,7 @@ class EventControllerTest {
     @DisplayName("POST /events Test - Success")
     public void createEventSuccess() throws Exception {
         //Given
-        Event testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
+        var testEvent = new Event("id", "testEvent", "testEventDescription", "Amsterdam", "John doe", new Date());
         given(eventService.postEvent(any())).willReturn(testEvent);
         //when
         mockMvc.perform(post("/events")

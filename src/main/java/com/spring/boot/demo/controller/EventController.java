@@ -11,8 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -24,9 +22,9 @@ public class EventController {
     EventService eventService;
     @PostMapping("/events")
     public ResponseEntity createEvent(@RequestBody @Valid Event event){
-        Event createdEvent = eventService.postEvent(event);
+        var createdEvent = eventService.postEvent(event);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+        var location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdEvent.getId())
                 .toUri();
@@ -37,7 +35,7 @@ public class EventController {
     public ResponseEntity<?> createEventWithTemplate(@RequestBody @NotNull @Valid Event event){
         Event createdEvent = eventService.postEventWithTemplate(event);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+        var location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdEvent.getId())
                 .toUri();
@@ -67,7 +65,7 @@ public class EventController {
     @GetMapping("/events")
     public ResponseEntity<?> findEvents(@RequestParam(name = "venue" ) Optional<String> venue) throws EventNotFoundException {
 
-        List<Event> eventsFound = venue.isPresent()?
+        var eventsFound = venue.isPresent()?
                 eventService.getEventsByVenue(venue.get())
                 : eventService.findEvents();
         if(eventsFound.size()==0) throw new EventNotFoundException("No Event found");
