@@ -34,7 +34,7 @@
 @REM ----------------------------------------------------------------------------
 
 @REM Begin all REM lines with '@' in case MAVEN_BATCH_ECHO is 'on'
-@echo on
+@echo off
 @REM set title of command window
 title %0
 @REM enable echoing by setting MAVEN_BATCH_ECHO to 'on'
@@ -54,12 +54,10 @@ if exist "%HOME%\mavenrc_pre.cmd" call "%HOME%\mavenrc_pre.cmd"
 
 set ERROR_CODE=0
 
-
 @REM To isolate internal variables from possible post scripts, we use another setlocal
 @setlocal
 
 @REM ==== START VALIDATION ====
-set JAVA_NEW_HOME = "C:\projects\jdk11\amazon-corretto-11.0.10.9.1-windows-x64-jdk\jdk11.0.10_9"
 if not "%JAVA_HOME%" == "" goto OkJHome
 
 echo.
@@ -70,7 +68,7 @@ echo.
 goto error
 
 :OkJHome
-if exist "C:\projects\jdk11\amazon-corretto-11.0.10.9.1-windows-x64-jdk\jdk11.0.10_9\bin\java.exe" goto init
+if exist "%JAVA_HOME%\bin\java.exe" goto init
 
 echo.
 echo Error: JAVA_HOME is set to an invalid directory. >&2
@@ -118,7 +116,7 @@ for /F "usebackq delims=" %%a in ("%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config") do s
 
 :endReadAdditionalConfig
 
-SET MAVEN_JAVA_EXE="C:\projects\jdk11\amazon-corretto-11.0.10.9.1-windows-x64-jdk\jdk11.0.10_9\bin\java.exe"
+SET MAVEN_JAVA_EXE="%JAVA_HOME%\bin\java.exe"
 set WRAPPER_JAR="%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.jar"
 set WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
 
