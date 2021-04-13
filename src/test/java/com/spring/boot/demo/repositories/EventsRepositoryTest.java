@@ -6,8 +6,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -23,8 +26,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.*;
-
-@DataMongoTest
+@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 @ActiveProfiles("test")
 class EventsRepositoryTest {
 
@@ -78,11 +81,10 @@ class EventsRepositoryTest {
 
         //given
         Event testEvent = new Event("id", "name", "description", "Amsterdam", "John doe", new Date());
-
-
+        eventsRepository.save(testEvent);
 
         // when
-        Optional<Event> fetchEvent = eventsRepository.findById("1");
+        Optional<Event> fetchEvent = eventsRepository.findById("id");
 
         //then
 

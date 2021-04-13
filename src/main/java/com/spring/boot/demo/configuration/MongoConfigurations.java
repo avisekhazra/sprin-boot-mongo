@@ -3,12 +3,9 @@ package com.spring.boot.demo.configuration;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
-import com.spring.boot.demo.converters.ZoneDateWriteConverter;
-import com.spring.boot.demo.converters.ZonedDateReadConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
@@ -22,21 +19,27 @@ public class MongoConfigurations extends AbstractMongoClientConfiguration {
 
     @Autowired
     private Environment env;
-    @Value("${spring.data.mongodb.host}")
+    @Value("${spring.data.mongodb.host:localhost}")
     private String host;
 
-    @Value("${spring.data.mongodb.port}")
+    @Value("${spring.data.mongodb.port:27017}")
     private int port;
 
-    @Value("${spring.data.mongodb.database}")
+    @Value("${spring.data.mongodb.database:embeded_db}")
     private String database;
 
-    @Value("${spring.data.mongodb.authentication-database}")
+    @Value("${spring.data.mongodb.authentication-database:admin}")
     private String authDatabase;
+
+    @Value("${spring.data.mongodb.username:root}")
+    private String userName;
+
+    @Value("${spring.data.mongodb.password:root}")
+    private String passWord;
 
     @Override
     protected String getDatabaseName() {
-        return env.getProperty("spring.data.mongodb.database");
+        return database;
     }
     @Override
     public Collection getMappingBasePackages() {
@@ -45,11 +48,12 @@ public class MongoConfigurations extends AbstractMongoClientConfiguration {
 
     @Override
     protected void configureClientSettings(MongoClientSettings.Builder builder) {
-        String userName = env.getProperty("spring.data.mongodb.username");
-        String passWord = env.getProperty("spring.data.mongodb.password");
-        builder.credential(MongoCredential.createCredential(userName, authDatabase, passWord.toCharArray()))
-                .applyToClusterSettings(b ->
-                        b.hosts(Arrays.asList(new ServerAddress(host, port))));
+        if(!userName.equals("root")){
+            builder.credential(MongoCredential.createCredential(userName, authDatabase, passWord.toCharArray()))
+                    .applyToClusterSettings(b ->
+                            b.hosts(Arrays.asList(new ServerAddress(host, port))));
+        }
+
     }
 
     @Override
